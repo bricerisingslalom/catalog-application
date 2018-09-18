@@ -1,23 +1,35 @@
-node('jenkins-slave-nrv4m') {
+podTemplate(label: 'twistlock-example-builder',
+  containers: [
+    containerTemplate(
+      name: 'docker-slave',
+      image: 'docker:18.05.0-ce'
+    )
+  ],
+  volumes: [
+    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
+  ]
+) {
 
-  stage("checkout") {
-    checkout scm
-  }
+  node('docker-slave') {
 
-  stage("build") {
-    sh 'cd products-service ; ./build.sh --no-cache'
-  }
+    stage("checkout") {
+      checkout scm
+    }
 
-  stage("push") {
+    stage("build") {
+      sh 'cd products-service ; ./build.sh --no-cache'
+    }
 
-    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_REGISTRY_CREDS',
-      usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
-      sh """
-        docker tag products-service:latest docker.io/bricerisingslalom/products-service:latest
-        docker login -u $USERNAME -p $PASSWORD
-        docker push docker.io/bricerisingslalom/products-service:latest
-      """
+    stage("push") {
 
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_REGISTRY_CREDS',
+        usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
+        sh """
+          docker tag products-service:latest docker.io/bricerisingslalom/products-service:latest
+          docker login -u $USERNAME -p $PASSWORD
+          docker push docker.io/bricerisingslalom/products-service:latest
+        """
+      }
     }
   }
 }
