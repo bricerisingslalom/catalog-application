@@ -5,7 +5,7 @@ node {
   }
 
   stage("build") {
-    sh './build.sh --no-cache'
+    sh 'cd catalog-service ; ./build.sh --no-cache'
   }
 
   stage("push") {
