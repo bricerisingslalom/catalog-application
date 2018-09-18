@@ -3,7 +3,7 @@ podTemplate(
   containers: [
     containerTemplate(
       name: 'aws-cli-slave',
-      image: 'mesosphere/aws-cli',
+      image: 'docker.io/bricerisingslalom/aws-cli:latest',
       ttyEnabled: true,
       command: 'cat'
     ),
