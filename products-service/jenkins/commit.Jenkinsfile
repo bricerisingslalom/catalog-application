@@ -13,7 +13,7 @@ podTemplate(label: 'docker-slave',
       image: 'jenkins/jnlp-slave:3.10-1-alpine',
       args: '${computer.jnlpmac} ${computer.name}',
       envVars: [
-        envVar(key: 'JENKINS_URL', value: 'http://jenkins:8080');
+        envVar(key: 'JENKINS_URL', value: 'http://jenkins:8080')
       ])
   ],
   volumes: [
