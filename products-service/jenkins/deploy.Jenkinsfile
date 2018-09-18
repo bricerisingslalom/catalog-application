@@ -6,6 +6,7 @@ podTemplate(
       image: 'docker.io/bricerisingslalom/aws-cli:latest',
       ttyEnabled: true,
       command: 'cat'
+      workingDir: '/home/aws'
     ),
     containerTemplate(
       name: 'jnlp',
