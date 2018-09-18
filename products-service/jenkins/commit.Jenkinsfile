@@ -1,16 +1,4 @@
-podTemplate(label: 'twistlock-example-builder',
-  containers: [
-    containerTemplate(
-      name: 'docker-slave',
-      image: 'docker:18.05.0-ce'
-    )
-  ],
-  volumes: [
-    hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
-  ]
-)
-
-node('docker-slave') {
+node('jenkins-slave-nrv4m') {
 
   stage("checkout") {
     checkout scm
