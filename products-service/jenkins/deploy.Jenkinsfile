@@ -5,7 +5,7 @@ podTemplate(
       name: 'aws-cli-slave',
       image: 'docker.io/bricerisingslalom/aws-cli:latest',
       ttyEnabled: true,
-      command: 'cat'
+      command: 'cat',
       workingDir: '/home/aws'
     ),
     containerTemplate(
