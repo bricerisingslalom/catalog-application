@@ -1,4 +1,13 @@
-node {
+podTemplate(label: 'twistlock-example-builder', 
+  containers: [
+    containerTemplate(
+      name: 'aws-cli-slave',
+      image: 'mesosphere/aws-cli'
+    )
+  ]
+)
+
+node('aws-cli-slave') {
 
     stage('checkout') {
 
