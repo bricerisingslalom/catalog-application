@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: products-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        iam.amazonaws.com/role: products-service-pod
+      labels:
+        app: products-service
+        version: "1.0"
+    spec:
+      containers:
+        - name: products-service
+          image: {{ .Values.productsservice.deployment.image }}
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: 128M
+              cpu: .1
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: products-service-config

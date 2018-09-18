@@ -1,0 +1,16 @@
+{
+  "name": "products-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/products.js",
+  "scripts": {
+    "test": "echo \"no tests\"",
+    "start": "node src/products.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.315.0",
+    "express": "^4.16.3"
+  }
+}
