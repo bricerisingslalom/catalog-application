@@ -12,6 +12,7 @@ podTemplate(
       name: 'jnlp',
       image: 'jenkins/jnlp-slave:3.10-1-alpine',
       args: '${computer.jnlpmac} ${computer.name}',
+      workingDir: '/home/jenkins'
       envVars: [
         envVar(key: 'JENKINS_URL', value: 'http://jenkins:8080')
       ]
