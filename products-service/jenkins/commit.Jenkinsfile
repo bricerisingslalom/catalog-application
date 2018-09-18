@@ -1,9 +1,10 @@
-podTemplate(label: 'twistlock-example-builder',
+podTemplate(label: 'docker-slave',
   containers: [
     containerTemplate(
-      name: 'docker-slave',
+      name: 'docker-slave-container',
       //image: 'docker:18.05.0-ce'
       image: 'jenkins/jnlp-slave'
+      
     )
   ],
   volumes: [
