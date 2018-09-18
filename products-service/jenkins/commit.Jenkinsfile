@@ -1,13 +1,14 @@
 podTemplate(label: 'docker-slave',
   containers: [
-    containerTemplate(
+    /*containerTemplate(
       name: 'docker-slave-container',
       image: 'docker:18.05.0-ce',
       ttyEnabled: true,
       command: 'cat'
       //image: 'jenkins/jnlp-slave'
       
-    )
+    )*/
+    containerTemplate(name: 'jnlp', image: 'jenkins/jnlp-slave:3.10-1-alpine', args: '${computer.jnlpmac} ${computer.name}')
   ],
   volumes: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock')
