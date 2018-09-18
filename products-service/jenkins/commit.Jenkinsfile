@@ -2,8 +2,10 @@ podTemplate(label: 'docker-slave',
   containers: [
     containerTemplate(
       name: 'docker-slave-container',
-      //image: 'docker:18.05.0-ce'
-      image: 'jenkins/jnlp-slave'
+      image: 'docker:18.05.0-ce',
+      ttyEnabled: true,
+      command: 'cat'
+      //image: 'jenkins/jnlp-slave'
       
     )
   ],
