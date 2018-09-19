@@ -1,22 +1,57 @@
-node {
+podTemplate(
+  label: 'deploy-agent',
+  containers: [
+    containerTemplate(
+      name: 'helm-cli-slave',
+      image: 'docker.io/bricerisingslalom/helm-cli:latest',
+      ttyEnabled: true,
+      command: 'cat',
+      alwaysPullImage: true
+    ),
+    containerTemplate(
+      name: 'aws-cli-slave',
+      image: 'docker.io/bricerisingslalom/aws-cli:latest',
+      ttyEnabled: true,
+      command: 'cat',
+      alwaysPullImage: true
+    ),
+    containerTemplate(
+      name: 'jnlp',
+      image: 'jenkins/jnlp-slave:3.10-1-alpine',
+      args: '${computer.jnlpmac} ${computer.name}',
+      envVars: [
+        envVar(key: 'JENKINS_URL', value: 'http://jenkins:8080')
+      ],
+      alwaysPullImage: true
+    )
+  ]
+){
 
-    stage('checkout') {
+  node('deploy-agent') {
 
+    container('aws-cli-slave') {
+      stage('download kubeconfig') {
         checkout scm
-        sh "aws s3 cp s3://eks-config-files/demo/kubeconfig.yaml ."
-
+        sh 'aws s3 cp s3://eks-config-files/demo/kubeconfig.yaml .'
+        stash includes: '**', name: 'scm'
+      }
     }
 
-    stage('install') {
+    container('helm-cli-slave') {
+      stage('install') {
 
+        unstash 'scm'
         sh """
-            if [ -z `helm --tiller-namespace demo list | grep catalog-service` ]; then
-                helm --namespace demo --tiller-namespace demo --name catalog-service install chart
-            else
-                helm --namespace demo --tiller-namespace demo upgrade catalog-service chart --recreate-pods
-            fi
+          export KUBECONFIG=`pwd`/kubeconfig.yaml
+          cd catalog-service
+          if [ -z `helm --tiller-namespace demo list | grep catalog-service` ]; then
+            helm --namespace demo --tiller-namespace demo --name catalog-service install chart
+          else
+            helm --namespace demo --tiller-namespace demo upgrade catalog-service chart --recreate-pods
+          fi
         """
 
+      }
     }
-
+  }
 }
