@@ -32,13 +32,15 @@ podTemplate(
     container('aws-cli-slave') {
       stage('download kubeconfig') {
         checkout scm
-        sh "aws s3 cp s3://eks-config-files/demo/kubeconfig.yaml ."
+        sh 'aws s3 cp s3://eks-config-files/demo/kubeconfig.yaml .'
+        stash includes: '.', name: 'scm'
       }
     }
 
     container('helm-cli-slave') {
       stage('install') {
 
+        unstash 'scm'
         sh """
           export KUBECONFIG=`pwd`/kubeconfig.yaml
           if [ -z `helm --tiller-namespace demo list | grep products-service` ]; then
