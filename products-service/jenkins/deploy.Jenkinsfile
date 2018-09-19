@@ -43,10 +43,11 @@ podTemplate(
         unstash 'scm'
         sh """
           export KUBECONFIG=`pwd`/kubeconfig.yaml
+          cd product-service
           if [ -z `helm --tiller-namespace demo list | grep products-service` ]; then
-            helm --namespace demo --tiller-namespace demo --name products-service install product-service/chart
+            helm --namespace demo --tiller-namespace demo --name products-service install chart
           else
-            helm --namespace demo --tiller-namespace demo upgrade products-service product-service/chart --recreate-pods
+            helm --namespace demo --tiller-namespace demo upgrade products-service chart --recreate-pods
           fi
         """
 
