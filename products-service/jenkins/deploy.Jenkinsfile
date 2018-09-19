@@ -33,7 +33,7 @@ podTemplate(
       stage('download kubeconfig') {
         checkout scm
         sh 'aws s3 cp s3://eks-config-files/demo/kubeconfig.yaml .'
-        stash includes: '.', name: 'scm'
+        stash includes: '**', name: 'scm'
       }
     }
 
