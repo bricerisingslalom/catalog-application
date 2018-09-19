@@ -1,6 +1,13 @@
 podTemplate(
-  label: 'aws-cli-agent',
+  label: 'deploy-agent',
   containers: [
+    containerTemplate(
+      name: 'helm-cli-slave',
+      image: 'docker.io/bricerisingslalom/helm-cli:latest',
+      ttyEnabled: true,
+      command: 'cat',
+      alwaysPullImage: true
+    ),
     containerTemplate(
       name: 'aws-cli-slave',
       image: 'docker.io/bricerisingslalom/aws-cli:latest',
@@ -20,15 +27,19 @@ podTemplate(
   ]
 ){
 
-  node('aws-cli-agent') {
+  node('deploy-agent') {
+
     container('aws-cli-slave') {
       stage('checkout') {
         sh "aws s3 cp s3://eks-config-files/demo/kubeconfig.yaml ."
       }
+    }
 
+    container('helm-cli-slave') {
       stage('install') {
 
         sh """
+          export KUBECONFIG=`pwd`/kubeconfig.yaml
           if [ -z `helm --tiller-namespace demo list | grep products-service` ]; then
             helm --namespace demo --tiller-namespace demo --name products-service install chart
           else
