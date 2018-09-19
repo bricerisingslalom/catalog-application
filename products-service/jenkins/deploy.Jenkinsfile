@@ -30,7 +30,8 @@ podTemplate(
   node('deploy-agent') {
 
     container('aws-cli-slave') {
-      stage('checkout') {
+      stage('download kubeconfig') {
+        checkout scm
         sh "aws s3 cp s3://eks-config-files/demo/kubeconfig.yaml ."
       }
     }
