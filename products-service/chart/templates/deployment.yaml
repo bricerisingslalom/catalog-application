@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: products-service
 spec:
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       annotations:
