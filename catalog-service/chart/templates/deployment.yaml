@@ -14,12 +14,6 @@ spec:
         - name: catalog-service
           image: {{ .Values.catalogservice.deployment.image }}
           imagePullPolicy: Always
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 3001
-            initialDelaySeconds: 3
-            periodSeconds: 3
           resources:
             limits:
               memory: 128M
