@@ -36,10 +36,10 @@ podTemplate(label: 'docker-slave',
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_REGISTRY_CREDS',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
           sh """
-            PACKAGE_VERSION=${jq -r ".version" < package.json}
-            docker tag products-service:latest docker.io/bricerisingslalom/products-service:${PACKAGE_VERSION}
+            PACKAGE_VERSION=\${jq -r ".version" < package.json}
+            docker tag products-service:latest docker.io/bricerisingslalom/products-service:\${PACKAGE_VERSION}
             docker login -u $USERNAME -p $PASSWORD
-            docker push docker.io/bricerisingslalom/products-service:${PACKAGE_VERSION}
+            docker push docker.io/bricerisingslalom/products-service:\${PACKAGE_VERSION}
           """
         }
       }
