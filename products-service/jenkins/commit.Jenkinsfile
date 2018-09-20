@@ -22,6 +22,9 @@ podTemplate(label: 'docker-slave',
   node('docker-slave') {
 
     container('docker-slave-container') {
+      stage("prepare pod") {
+        sh 'apk add jq'
+      }
       stage("checkout") {
         checkout scm
       }
@@ -36,8 +39,7 @@ podTemplate(label: 'docker-slave',
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_REGISTRY_CREDS',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
           sh """
-            ls
-            apk add jq
+            cd products-service
             PACKAGE_VERSION=`jq -r ".version" < package.json`
             docker tag products-service:latest docker.io/bricerisingslalom/products-service:`PACKAGE_VERSION`
             docker login -u $USERNAME -p $PASSWORD
