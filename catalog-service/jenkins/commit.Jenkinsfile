@@ -22,6 +22,10 @@ podTemplate(label: 'docker-slave',
   node('docker-slave') {
 
     container('docker-slave-container') {
+      stage("prepare pod") {
+        sh 'apk add jq'
+      }
+
       stage("checkout") {
         checkout scm
       }
@@ -36,10 +40,11 @@ podTemplate(label: 'docker-slave',
         withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'DOCKER_REGISTRY_CREDS',
           usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD']]) {
           sh """
-            PACKAGE_VERSION=${jq -r ".version" < package.json}
-            docker tag catalog-service:latest docker.io/bricerisingslalom/catalog-service:${PACKAGE_VERSION}
+            cd catalog-service
+            export PACKAGE_VERSION=`jq -r ".version" < package.json`
+            docker tag catalog-service:latest docker.io/bricerisingslalom/catalog-service:\$PACKAGE_VERSION
             docker login -u $USERNAME -p $PASSWORD
-            docker push docker.io/bricerisingslalom/catalog-service:${PACKAGE_VERSION}
+            docker push docker.io/bricerisingslalom/catalog-service:\$PACKAGE_VERSION
           """
         }
       }
