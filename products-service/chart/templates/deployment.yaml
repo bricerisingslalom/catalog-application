@@ -16,6 +16,12 @@ spec:
         - name: products-service
           image: {{ .Values.productsservice.deployment.image }}
           imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 3
+            periodSeconds: 3
           resources:
             limits:
               memory: 128M
