@@ -14,7 +14,7 @@ build:
     # npm mirrors can sometimes be flacky, better to use shippable_retry
     # http://docs.shippable.com/ci/advancedOptions/retry/
     - cd products-service && ./build.sh
-    - cd catalog-service && ./build.sh
+    - cd ../catalog-service && ./build.sh
 
 
 # Integrations are used to connect external resources to CI
