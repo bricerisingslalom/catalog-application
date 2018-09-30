@@ -14,7 +14,13 @@ build:
     # npm mirrors can sometimes be flacky, better to use shippable_retry
     # http://docs.shippable.com/ci/advancedOptions/retry/
     - cd products-service && ./build.sh
+    - export PRODUCTS_PACKAGE_VERSION=`jq -r ".version" < package.json`
+    - docker tag products-service:latest docker.io/bricerisingslalom/products-service:\$PRODUCTS_PACKAGE_VERSION
+    - docker push docker.io/bricerisingslalom/products-service:\$PRODUCTS_PACKAGE_VERSION
     - cd ../catalog-service && ./build.sh
+    - export CATALOG_PACKAGE_VERSION=`jq -r ".version" < package.json`
+    - docker tag catalog-service:latest docker.io/bricerisingslalom/catalog-service:\$CATALOG_PACKAGE_VERSION
+    - docker push docker.io/bricerisingslalom/catalog-service:\$CATALOG_PACKAGE_VERSION
 
 
 # Integrations are used to connect external resources to CI
@@ -30,3 +36,7 @@ integrations:
       on_success: change
       on_failure: always
       on_pull_request: never
+
+  hub:
+    - integrationName: docker hub - bricerisingslalom    #replace with your subscription integration name
+      type: dockerRegistryLogin
