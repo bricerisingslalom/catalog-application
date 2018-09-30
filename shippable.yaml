@@ -29,6 +29,7 @@ resources:
 jobs:
   - name: build
     type: runCI
+    integration: docker hub - bricerisingslalom
     steps:
       - OUT: catalog-service-image
       - OUT: products-service-image
