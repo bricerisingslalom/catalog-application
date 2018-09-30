@@ -7,24 +7,25 @@ branches:
   only:
     - master
 
-build:
+#build:
 
   # http://docs.shippable.com/ci/shippableyml/#ci
-  ci:
+#  ci:
     # npm mirrors can sometimes be flacky, better to use shippable_retry
     # http://docs.shippable.com/ci/advancedOptions/retry/
-    - cd products-service && ./build.sh
-    - export PRODUCTS_PACKAGE_VERSION=`jq -r ".version" < package.json`
-    - docker tag products-service:latest docker.io/bricerisingslalom/products-service:$PRODUCTS_PACKAGE_VERSION
-    - docker push docker.io/bricerisingslalom/products-service:$PRODUCTS_PACKAGE_VERSION
-    - cd ../catalog-service && ./build.sh
-    - export CATALOG_PACKAGE_VERSION=`jq -r ".version" < package.json`
-    - docker tag catalog-service:latest docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
-    - docker push docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
+#    - cd products-service && ./build.sh
+#    - export PRODUCTS_PACKAGE_VERSION=`jq -r ".version" < package.json`
+#    - docker tag products-service:latest docker.io/bricerisingslalom/products-service:$PRODUCTS_PACKAGE_VERSION
+#    - docker push docker.io/bricerisingslalom/products-service:$PRODUCTS_PACKAGE_VERSION
+#    - cd ../catalog-service && ./build.sh
+#    - export CATALOG_PACKAGE_VERSION=`jq -r ".version" < package.json`
+#    - docker tag catalog-service:latest docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
+#    - docker push docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
 
 jobs:
   - name: deploy
     type: runSh
+    triggerMode: serial
     dependencyMode: immediate
     integrations:
       - integrationName: eks-cluster
