@@ -45,7 +45,9 @@ jobs:
         type: kubernetes
     steps:
       - IN: catalog-service-image
+        versionName: latest
       - IN: products-service-image
+        versionName: latest
       - TASK:
           name: deploy-to-eks
           script:
