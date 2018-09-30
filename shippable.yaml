@@ -22,22 +22,10 @@ build:
     - docker tag catalog-service:latest docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
     - docker push docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
 
-  cd:
-    - ls
-
-jobs:
-  - name: deploy
-    type: runSh
-    triggerMode: serial
-    integrations:
-      - integrationName: eks-cluster
-        type: kubernetes
-    steps:
-      - TASK:
-          name: deploy-to-eks
-          script:
-            - products-service/scripts/deploy.sh
-            - catalog-service/scripts/deploy.sh
+deploy:
+  eks:
+    - products-service/scripts/deploy.sh
+    - catalog-service/scripts/deploy.sh
 
 # Integrations are used to connect external resources to CI
 # http://docs.shippable.com/integrations/overview/
