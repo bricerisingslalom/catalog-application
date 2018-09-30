@@ -15,12 +15,12 @@ build:
     # http://docs.shippable.com/ci/advancedOptions/retry/
     - cd products-service && ./build.sh
     - export PRODUCTS_PACKAGE_VERSION=`jq -r ".version" < package.json`
-    - docker tag products-service:latest docker.io/bricerisingslalom/products-service:\$PRODUCTS_PACKAGE_VERSION
-    - docker push docker.io/bricerisingslalom/products-service:\$PRODUCTS_PACKAGE_VERSION
+    - docker tag products-service:latest docker.io/bricerisingslalom/products-service:$PRODUCTS_PACKAGE_VERSION
+    - docker push docker.io/bricerisingslalom/products-service:$PRODUCTS_PACKAGE_VERSION
     - cd ../catalog-service && ./build.sh
     - export CATALOG_PACKAGE_VERSION=`jq -r ".version" < package.json`
-    - docker tag catalog-service:latest docker.io/bricerisingslalom/catalog-service:\$CATALOG_PACKAGE_VERSION
-    - docker push docker.io/bricerisingslalom/catalog-service:\$CATALOG_PACKAGE_VERSION
+    - docker tag catalog-service:latest docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
+    - docker push docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
 
 
 # Integrations are used to connect external resources to CI
