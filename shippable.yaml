@@ -8,11 +8,12 @@ branches:
     - master
 
 build:
- ci:
-   - catalog-service/cicd-scripts/build.sh
-   - products-service/cicd-scripts/build.sh
-   - shipctl post_resource_state catalog-service-image versionName latest
-   - shipctl post_resource_state products-service-image versionName latest
+  ci:
+    - catalog-service/cicd-scripts/build.sh
+    - products-service/cicd-scripts/build.sh
+  post_ci:
+    - shipctl post_resource_state catalog-service-image versionName latest
+    - shipctl post_resource_state products-service-image versionName latest
 
 resources:
   - name: catalog-service-image
