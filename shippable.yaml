@@ -21,6 +21,9 @@ build:
     - export CATALOG_PACKAGE_VERSION=`jq -r ".version" < package.json`
     - docker tag catalog-service:latest docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
     - docker push docker.io/bricerisingslalom/catalog-service:$CATALOG_PACKAGE_VERSION
+  
+  cd:
+    - ls
 
 
 # Integrations are used to connect external resources to CI
