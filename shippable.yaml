@@ -12,8 +12,8 @@ build:
     - catalog-service/cicd-scripts/build.sh
     - products-service/cicd-scripts/build.sh
   post_ci:
-    - shipctl post_resource_state catalog-service-image versionName latest
-    - shipctl post_resource_state products-service-image versionName latest
+    - shipctl post_resource_state catalog-service-image versionName $BRANCH.$BUILD_NUMBER
+    - shipctl post_resource_state products-service-image versionName $BRANCH.$BUILD_NUMBER
 
 resources:
   - name: catalog-service-image
