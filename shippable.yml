@@ -39,9 +39,9 @@ jobs:
   - name: catalog-application_deploy
     type: runSh
     triggerMode: serial
-    integrations:
-      - integrationName: eks-cluster
-        type: kubernetes
+    #integrations:
+    #  - integrationName: eks-cluster
+    #    type: kubernetes
     steps:
       - IN: catalog-service-image
         versionName: latest
