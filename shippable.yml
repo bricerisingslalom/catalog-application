@@ -56,9 +56,10 @@ jobs:
   - name: catalog-application_deploy
     type: runSh
     triggerMode: serial
-    #integrations:
-    #  - integrationName: eks-cluster
-    #    type: kubernetes
+    integrations:
+      eks:
+        - integrationName: eks-cluster
+          type: kubernetes
     steps:
       - IN: catalog-service-image
         versionName: latest
@@ -68,8 +69,6 @@ jobs:
       - TASK:
           name: deploy-to-eks
           script:
-            - ls IN/eks-cluster
-            - ls IN/catalog-app-repo/gitRepo
             - cd IN/catalog-app-repo/gitRepo
             - products-service/cicd-scripts/deploy.sh
             - catalog-service/cicd-scripts/deploy.sh
