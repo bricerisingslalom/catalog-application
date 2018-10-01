@@ -50,8 +50,8 @@ jobs:
       - TASK:
           name: deploy-to-eks
           script:
-            - products-service/scripts/deploy.sh
-            - catalog-service/scripts/deploy.sh
+            - products-service/cicd-scripts/deploy.sh
+            - catalog-service/cicd-scripts/deploy.sh
 
 integrations:
 
