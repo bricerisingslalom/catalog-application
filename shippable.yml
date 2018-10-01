@@ -43,11 +43,9 @@ jobs:
       - integrationName: eks-cluster
         type: kubernetes
     steps:
-      - IN:
-          name: catalog-service-image
+      - IN: catalog-service-image
           versionName: latest
-      - IN:
-          name: products-service-image
+      - IN: products-service-image
           versionName: latest
       - TASK:
           name: deploy-to-eks
