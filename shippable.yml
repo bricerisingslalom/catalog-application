@@ -59,7 +59,7 @@ jobs:
     integrations:
       eks:
         - integrationName: eks-cluster
-          type: kubernetes
+          type: cluster
     steps:
       - IN: catalog-service-image
         versionName: latest
