@@ -57,7 +57,7 @@ jobs:
     type: runSh
     triggerMode: serial
     integrations:
-      - integrationName: eks
+      - integrationName: eks-cluster
     steps:
       - IN: catalog-service-image
         versionName: latest
