@@ -28,6 +28,23 @@ resources:
       sourceName: "docker.io/bricerisingslalom/products-service"
     seed:
       versionName: "latest"
+      resources:
+
+  - name: catalog-app-repo
+    type: gitRepo
+    # replace github with your SCM integration name
+    integration: github
+    pointer:
+      # replace bricerisingslalom/catalog-application with your source code organization and repository name.
+      sourceName: bricerisingslalom/catalog-application
+      # configure branch
+      branch: master
+      # configure webhooks
+      buildOnCommit:            true
+      buildOnPullRequest:       true
+      buildOnPullRequestClose:  false
+      buildOnRelease:           false
+      buildOnTagPush:           false
 
 jobs:
   - name: catalog-application_runCI
@@ -47,6 +64,7 @@ jobs:
         versionName: latest
       - IN: products-service-image
         versionName: latest
+      - IN: catalog-app-repo
       - TASK:
           name: deploy-to-eks
           script:
