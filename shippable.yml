@@ -65,7 +65,6 @@ jobs:
       - IN: products-service-image
         versionName: latest
       - IN: catalog-app-repo
-      - IN: eks-cluster
       - TASK:
           name: deploy-to-eks
           script:
