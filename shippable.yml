@@ -16,6 +16,10 @@ build:
     - shipctl post_resource_state products-service-image versionName $BRANCH.$BUILD_NUMBER
 
 resources:
+  - name: kube-cluster
+    type: cluster
+    integration: eks-cluster
+
   - name: catalog-service-image
     type: image
     pointer:
@@ -56,19 +60,21 @@ jobs:
   - name: catalog-application_deploy
     type: runSh
     triggerMode: serial
-    integrations:
-      eks:
-        - integrationName: eks-cluster
-          type: cluster
+    #integrations:
+    #  eks:
+    #    - integrationName: eks-cluster
+    #      type: cluster
     steps:
       - IN: catalog-service-image
         versionName: latest
       - IN: products-service-image
         versionName: latest
       - IN: catalog-app-repo
+      - IN: kube-cluster
       - TASK:
           name: deploy-to-eks
           script:
+            - ls IN/kube-cluster
             - cd IN/catalog-app-repo/gitRepo
             - products-service/cicd-scripts/deploy.sh
             - catalog-service/cicd-scripts/deploy.sh
@@ -88,7 +94,7 @@ integrations:
   hub:
     - integrationName: docker hub - bricerisingslalom
       type: dockerRegistryLogin
-  
+
   eks:
     - integrationName: eks-cluster
       type: kubernetes
