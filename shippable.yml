@@ -30,13 +30,13 @@ resources:
       versionName: "latest"
 
 jobs:
-  - name: build
+  - name: catalog-application_runCI
     type: runCI
     integration: docker hub - bricerisingslalom
     steps:
       - OUT: catalog-service-image
       - OUT: products-service-image
-  - name: deploy
+  - name: catalog-application_deploy
     type: runSh
     triggerMode: serial
     dependencyMode: immediate
