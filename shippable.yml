@@ -58,7 +58,7 @@ jobs:
     triggerMode: serial
     integrations:
       - integrationName: eks-cluster
-        type: Kubernetes
+        type: kubernetes
     steps:
       - IN: catalog-service-image
         versionName: latest
