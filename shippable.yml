@@ -68,7 +68,8 @@ jobs:
       - TASK:
           name: deploy-to-eks
           script:
-            - ls IN
+            - ls IN/catalog-app-repo
+            - cd IN/catalog-app-repo
             - products-service/cicd-scripts/deploy.sh
             - catalog-service/cicd-scripts/deploy.sh
 
