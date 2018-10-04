@@ -12,12 +12,12 @@ steps:
   displayName: 'Build products-service'
   inputs:
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: bricerisingslalom
+    dockerRegistryEndpoint: bricerisingslalom-docker
     arguments: '-t docker.io/bricerisingslalom/products-service:latest'
 - task: Docker@1
   displayName: 'Push products-service'
   inputs:
     containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: bricerisingslalom
+    dockerRegistryEndpoint: bricerisingslalom-docker
     command: 'Push an image'
     arguments: 'docker.io/bricerisingslalom/products-service:latest'
