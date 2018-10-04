@@ -9,5 +9,8 @@ pool:
 steps:
 - script: products-service/cicd-scripts/build.sh
   displayName: 'Build products-service Container'
+  inputs:
+    dockerRegistry: bricerisingslalom
+
 - script: catalog-service/cicd-scripts/build.sh
   displayName: 'Build products-service Container'
