@@ -7,10 +7,17 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-- script: products-service/cicd-scripts/build.sh
-  displayName: 'Build products-service Container'
+- bash: export PRODUCTS_VERSION=$(jq -r ".version" < products-service/package.json)
+- task: build products-service
+  displayName: 'Build products-service'
   inputs:
-    dockerRegistry: bricerisingslalom
-
-- script: catalog-service/cicd-scripts/build.sh
-  displayName: 'Build products-service Container'
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: bricerisingslalom
+    arguments: '-t docker.io/bricerisingslalom/products-service:${PRODUCTS_VERSION}'
+- task: push products-service
+  displayName: 'Push products-service'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    dockerRegistryEndpoint: bricerisingslalom
+    command: 'Push an image'
+    arguments: 'docker.io/bricerisingslalom/products-service:${PRODUCTS_VERSION}'
