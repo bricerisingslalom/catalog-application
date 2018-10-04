@@ -7,10 +7,7 @@ pool:
   vmImage: 'Ubuntu 16.04'
 
 steps:
-- script: echo Hello, world! && ls
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- script: products-service/cicd-scripts/build.sh
+  displayName: 'Build products-service Container'
+- script: catalog-service/cicd-scripts/build.sh
+  displayName: 'Build products-service Container'
